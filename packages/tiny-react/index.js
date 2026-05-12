@@ -18,22 +18,3 @@ function createElement(type, props, ...children) {
   };
 }
 
-const ele = createElement(
-  "div",
-  { className: "bg-red-400" },
-  createElement(
-    "p",
-    { className: "text-red-400" },
-    createElement("p", { className: "text-yellow-400" }, "Hey!"),
-  ),
-);
-console.log("ele", ele);
-
-{
-  /* <div className="bg-red-400">
-  <p className="text-red-400">
-    <p className="text-yellow-400">Hey!</p>
-  </p>
-</div>;
- */
-}
