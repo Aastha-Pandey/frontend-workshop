@@ -1,0 +1,16 @@
+<!doctype html>
+<html>
+  <body>
+    <div id="root"></div>
+    <script src="index.js"></script>
+    <script src="render.js"></script>
+    <script>
+      const tree = createElement(
+        "div",
+        { style: { color: "red" } },
+        createElement("p", { className: "text-red-400" }, "Hello!"),
+      );
+      render(tree, document.getElementById("root"));
+    </script>
+  </body>
+</html>
