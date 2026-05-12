@@ -1,11 +1,11 @@
-import Counter from "../components/Counter";
+import Counter from '../components/Counter'
 
 const CounterPage = () => {
   return (
-    <section className="items-center min-h-screen justify-center flex">
+    <section className='items-center min-h-screen justify-center flex'>
       <Counter />
     </section>
-  );
-};
+  )
+}
 
-export default CounterPage;
+export default CounterPage
