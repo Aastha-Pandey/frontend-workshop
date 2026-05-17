@@ -1,6 +1,6 @@
 //Implement createElement(type, props, ...children). Match React's output shape exactly.
 
-function createElement(type, props, ...children) {
+export function createElement(type, props, ...children) {
   return {
     $$typeof: Symbol.for("react.element"),
     type,
