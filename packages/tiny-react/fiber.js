@@ -56,10 +56,34 @@ const fiber = createFiber(element);
 function printTree(fiber, depth = 0) {
   if (!fiber) return;
   const indent = "  ".repeat(depth);
-  const label = fiber.type === "TEXT_NODE" ? `"${fiber.props.nodeValue}"` : fiber.type;
+  const label =
+    fiber.type === "TEXT_NODE" ? `"${fiber.props.nodeValue}"` : fiber.type;
   console.log(indent + label);
   printTree(fiber.child, depth + 1);
   printTree(fiber.sibling, depth);
 }
 
 printTree(fiber);
+
+function performUnitOfWork(fiber) {
+  if (fiber.type === "TEXT_NODE") {
+    fiber.dom = document.createTextNode(fiber.props.nodeValue);
+  } else {
+    fiber.dom = document.createElement(fiber.type);
+  }
+  if (fiber.child) return fiber.child;
+  if (fiber.sibling) return fiber.sibling;
+
+  let ancestor = fiber;
+  while (ancestor) {
+    if (ancestor.sibling) return ancestor.sibling;
+    ancestor = ancestor.parent;
+  }
+  return null;
+}
+
+let nextUnitOfWork = fiber;
+
+while (nextUnitOfWork) {
+  nextUnitOfWork = performUnitOfWork(nextUnitOfWork);
+}
