@@ -53,4 +53,13 @@ const element = createElement(
 
 const fiber = createFiber(element);
 
-console.log("fiber", fiber);
+function printTree(fiber, depth = 0) {
+  if (!fiber) return;
+  const indent = "  ".repeat(depth);
+  const label = fiber.type === "TEXT_NODE" ? `"${fiber.props.nodeValue}"` : fiber.type;
+  console.log(indent + label);
+  printTree(fiber.child, depth + 1);
+  printTree(fiber.sibling, depth);
+}
+
+printTree(fiber);
