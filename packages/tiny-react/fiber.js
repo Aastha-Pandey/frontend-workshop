@@ -84,6 +84,23 @@ function performUnitOfWork(fiber) {
 
 let nextUnitOfWork = fiber;
 
-while (nextUnitOfWork) {
-  nextUnitOfWork = performUnitOfWork(nextUnitOfWork);
+function workloop(deadline) {
+  while (nextUnitOfWork && deadline.timeRemaining() > 0) {
+    nextUnitOfWork = performUnitOfWork(nextUnitOfWork);
+  }
+  if (!nextUnitOfWork) {
+    commitRoot(fiber);
+  }
+  requestIdleCallback(workloop);
+}
+
+requestIdleCallback(workloop);
+
+function commitRoot(fiber) {
+  if (fiber == null) return;
+  if (fiber.parent) {
+    fiber.parent.dom.appendChild(fiber.dom);
+  }
+  commitRoot(fiber.child);
+  commitRoot(fiber.sibling);
 }
